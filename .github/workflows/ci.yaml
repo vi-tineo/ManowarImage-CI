@@ -7,26 +7,26 @@ on:
     branches: [ main ]
 
 env:
-  IMAGE_NAME: manowar
+  IMAGE_NAME: manowar #aqui a imagem construida a partir do Dockerfile [e identificada e consumida
 
 jobs:
   build-and-push:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-latest #maquina do runner do GitHub Actions
 
     steps:
     - name: Checkout do código
-      uses: actions/checkout@v3
+      uses: actions/checkout@v3 #faz a leitura do repo, esta [e a forma de o workflow acessar o repo
 
     - name: Instalar Go
-      uses: actions/setup-go@v4
+      uses: actions/setup-go@v4 # esta lib [e responsavel pela instala;'ao do Go, que executar[a o bin[ario 
       with:
         go-version: '1.21'
 
     - name: Instalar dependências
-      run: go mod tidy
+      run: go mod tidy # o go mod tidy tem autonomia para ler os imports contidos no c[odigo e prover/ajustar as dependencias (inclusive checksuns)
 
     - name: Rodar testes unitários
-      run: go test ./...
+      run: go test ./... # o go test buscar[a o arquivo com o sufixo _test.go e o parametro ... gera recursividade na busca
 
     - name: Login no Docker Hub
       uses: docker/login-action@v3
