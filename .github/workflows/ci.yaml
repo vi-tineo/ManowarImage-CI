@@ -7,7 +7,7 @@ on:
     branches: [ main ]
 
 env:
-  IMAGE_NAME: dockerhub-vitortineo/manowar #aqui a imagem construida a partir do Dockerfile [e identificada e consumida
+  IMAGE_NAME: vitortineo/manowar #aqui a imagem construida a partir do Dockerfile [e identificada e consumida
 
 jobs:
   build-and-push:
