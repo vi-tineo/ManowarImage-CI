@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: mano-lb
-  namespace: default
+  namespace: manowar
 spec:
   selector:
     app: manowar
