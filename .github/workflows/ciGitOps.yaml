@@ -1,0 +1,28 @@
+name: CI-GitOps
+
+on:
+  workflow_dispatch:   # d[a pra executar manualmente
+  push:
+    branches: [ "main" ]
+
+jobs:
+  update-gitops:
+    runs-on: ubuntu-latest
+    steps:
+      # Checkout direto do repo GitOps
+      - name: Checkout GitOps repo
+        uses: actions/checkout@v3
+        with:
+          repository: vi-tineo/ManowarK8sGitOps
+          token: ${{ secrets.GITOPS_TOKEN }}
+          path: gitops
+
+      # Atualizar o manifesto com a nova tag da imagem
+      - name: Update manifest
+        run: |
+          cd gitops/k8s
+          sed -i "s|image: vitortineo/manowar:.*|image: vitortineo/manowar:${{ github.sha }}|" manoDeploy.yaml
+          git config user.name "ci-bot"
+          git config user.email "ci-bot@users.noreply.github.com"
+          git commit -am "Update image to ${{ github.sha }}"
+          git push
