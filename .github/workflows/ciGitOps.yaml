@@ -1,15 +1,15 @@
 name: CI-GitOps
 
 on:
-  workflow_run:   # d[a pra executar manualmente
-      workflows: ["CI Pipeline"]
+  workflow_run:
+    workflows: ["CI Pipeline"]
+    types:
+      - completed
 
 jobs:
   update-gitops:
     runs-on: ubuntu-latest
-    needs: build-and-push   # dependencia
     steps:
-      # Checkout direto do repo GitOps
       - name: Checkout GitOps repo
         uses: actions/checkout@v3
         with:
@@ -17,12 +17,12 @@ jobs:
           token: ${{ secrets.GITOPS_TOKEN }}
           path: gitops
 
-      # Atualizar o manifesto com a nova tag da imagem
       - name: Update manifest
         run: |
           cd gitops/k8s
           sed -i "s|image: vitortineo/manowar:.*|image: vitortineo/manowar:${{ github.sha }}|" manoDeploy.yaml
           git config user.name "salazar"
           git config user.email "salazart@users.noreply.github.com"
-          git commit -am "Update image to ${{ github.sha }}"
+          git add manoDeploy.yaml
+          git commit -m "Update image to ${{ github.sha }}"
           git push
