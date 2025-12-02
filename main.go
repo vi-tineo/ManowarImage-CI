@@ -9,7 +9,7 @@ import (
 )
 
 var ingressosDisponiveis = 100
-var evento = "Manowar True Metal Concert Test"
+var evento = "Manowar True Metal Concert"
 
 func main() {
 	http.HandleFunc("/", homeHandler)
@@ -24,7 +24,7 @@ func homeHandler(w http.ResponseWriter, r *http.Request) {
 	<!DOCTYPE html>
 	<html>
 	<head><title>{{.Evento}}</title></head>
-	<body style="background-color:black; color:white; text-align:center;">
+	<body style="background-color:black; color:yellow; text-align:center;">
 		<h1>{{.Evento}}</h1>
 		<form action="/reserva" method="POST">
 			<p>Are you True Metal? <input type="checkbox" name="truemetal"></p>
