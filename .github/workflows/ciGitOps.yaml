@@ -19,7 +19,7 @@ jobs:
 
       - name: Update manifest
         run: |
-          cd k8s/
+          cd gitops/k8s
           sed -i "s|image: vitortineo/manowar:.*|image: vitortineo/manowar:${{ github.sha }}|" manoDeploy.yaml
           git config user.name "salazar"
           git config user.email "salazart@users.noreply.github.com"
